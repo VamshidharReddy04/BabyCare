@@ -7,10 +7,10 @@
     "start": "node backend/server.js",
     "dev": "nodemon backend/server.js",
     "dev:all": "kill-port 5000 5173 && concurrently \"npm run dev\" \"npm run client\"",
-    "client": "vite --config frontend/vite.config.mjs",
+    "client": "vite frontend/src --config frontend/vite.config.mjs --port 5173",
     "build": "npm run build:client",
-    "build:client": "vite build --config frontend/vite.config.mjs",
-    "preview:client": "vite preview --config frontend/vite.config.mjs"
+    "build:client": "vite build frontend/src --config frontend/vite.config.mjs --outDir ../dist",
+    "preview:client": "vite preview frontend/dist"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
