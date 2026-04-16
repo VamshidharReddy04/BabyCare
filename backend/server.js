@@ -7,7 +7,13 @@ require("dotenv").config();
 const app = express();
 
 // ── Middleware ──────────────────────────────────────────────────────────────
-app.use(cors({ origin: process.env.CLIENT_URL || "http://localhost:5173" }));
+app.use(
+  cors({
+    origin: "https://baby-care-swart.vercel.app",
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
+  }),
+);
 app.use(express.json());
 
 // ── Routes ──────────────────────────────────────────────────────────────────
