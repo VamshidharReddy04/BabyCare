@@ -1,219 +1,149 @@
-# 🍼 BabyCare — MERN Full-Stack Website
+# BabyCare - MERN Full-Stack Website
 
-> Premium organic baby products platform built with MongoDB, Express, React & Node.js
+BabyCare is a full-stack e-commerce application for baby products.
+It uses a React + Vite frontend and an Express + MongoDB backend.
 
----
+## Features
 
-## ✨ Features
+- Product browsing with category and keyword filtering
+- Product reviews
+- Cart and checkout flow
+- User authentication with JWT
+- Profile management
+- Customer order history
+- Admin dashboard for products, orders, and users
+- User ban/unban support for admin
 
-| Area              | Details                                                     |
-| ----------------- | ----------------------------------------------------------- |
-| 🎨 **Frontend**   | React 18 + Vite, Redux Toolkit, Framer Motion, Google Fonts |
-| ⚙️ **Backend**    | Express.js REST API, JWT Auth, bcrypt passwords             |
-| 🗄️ **Database**   | MongoDB + Mongoose ODM                                      |
-| 🛒 **E-Commerce** | Cart, Checkout, Order tracking, Reviews                     |
-| 👮 **Auth**       | Register / Login / Admin roles                              |
-| 📦 **State**      | Local cart and auth utilities                               |
-| 💳 **Payments**   | COD flow hooks                                              |
+## Project Structure
 
----
-
-## 📁 Project Structure
-
-```
+```text
 BabyCare/
-├── package.json
-├── backend/
-│   ├── server.js
-│   ├── middleware/
-│   │   └── auth.js
-│   ├── models/
-│   │   ├── Order.js
-│   │   ├── Product.js
-│   │   └── User.js
-│   └── routes/
-│       ├── categories.js
-│       ├── orders.js
-│       ├── products.js
-│       ├── reviews.js
-│       └── users.js
-└── frontend/
-   ├── vite.config.mjs
-   └── src/
-      ├── App.jsx
-      ├── App.css
-      ├── main.jsx
-      ├── index.html
-      ├── pages/
-      │   ├── AdminPage.jsx
-      │   ├── CheckoutPage.jsx
-      │   ├── LoginPage.jsx
-      │   ├── MyOrdersPage.jsx
-      │   ├── ProfilePage.jsx
-      │   └── SignupPage.jsx
-      └── utils/
-         ├── api.js
-         ├── auth.js
-         └── cart.js
+|-- package.json
+|-- server.js
+|-- vercel.json
+|-- backend/
+|   |-- server.js
+|   |-- middleware/
+|   |   |-- auth.js
+|   |-- models/
+|   |   |-- Order.js
+|   |   |-- Product.js
+|   |   |-- User.js
+|   |-- routes/
+|       |-- categories.js
+|       |-- orders.js
+|       |-- products.js
+|       |-- reviews.js
+|       |-- users.js
+|-- frontend/
+    |-- index.html
+    |-- package.json
+    |-- vite.config.mjs
+    |-- src/
+        |-- App.jsx
+        |-- App.css
+        |-- main.jsx
+        |-- pages/
+        |   |-- AdminPage.jsx
+        |   |-- CheckoutPage.jsx
+        |   |-- LoginPage.jsx
+        |   |-- MyOrdersPage.jsx
+        |   |-- ProfilePage.jsx
+        |   |-- SignupPage.jsx
+        |-- utils/
+            |-- api.js
+            |-- auth.js
+            |-- cart.js
 ```
 
----
+## Tech Stack
 
-## 🚀 Quick Start
+- Frontend: React, React Router, Vite
+- Backend: Node.js, Express
+- Database: MongoDB with Mongoose
+- Auth: JWT, bcryptjs
 
-### 1. Clone & Install
+## Local Setup
+
+1. Install dependencies from the repository root:
 
 ```bash
 npm install
 ```
 
-### 2. Environment Variables
-
-Create `.env` in the project root:
+2. Configure environment variables in root `.env`:
 
 ```env
 MONGO_URI=mongodb://localhost:27017/babycare
 JWT_SECRET=your_super_secret_key_here
 PORT=5000
-CLIENT_URL=http://localhost:5173
 NODE_ENV=development
 ```
 
-You can copy from `.env.example`.
+3. (Optional) Override frontend API URL by setting `VITE_API_URL`.
+   If not set, frontend uses the deployed backend URL from `frontend/src/utils/api.js`.
 
-Create `.env.local` for the frontend API base URL:
-
-```env
-VITE_API_URL=http://localhost:5000
-```
-
-You can copy from `.env.local.example`.
-
-### 3. Run Dev Servers
+4. Start frontend and backend together:
 
 ```bash
 npm run dev:all
 ```
 
-Frontend → http://localhost:5173
-Backend API → http://localhost:5000/api
+- Frontend: http://localhost:5173
+- Backend API health check: http://localhost:5000/api/health
 
----
+## Available Scripts (Root)
 
-## 🚀 MERN Project Deployment (Steps Only)
+- `npm run dev` - start backend with nodemon
+- `npm run client` - start frontend Vite server
+- `npm run dev:all` - run backend and frontend together
+- `npm run build` - build frontend to `dist`
+- `npm run preview:client` - preview built frontend
 
-### 🔹 Backend Deployment (Render)
-
-1. Push backend code to GitHub.
-2. Go to Render and create account.
-3. Click New Web Service and connect GitHub repo.
-4. Select backend folder/project (for this repo, use root directory).
-5. Set Build Command: `npm install`.
-6. Set Start Command: `node backend/server.js`.
-7. Add environment variables:
-   MONGO_URI
-   JWT_SECRET
-   NODE_ENV=production
-   CLIENT_URL (your frontend URL later)
-8. Deploy and copy backend live URL.
-
-### 🔹 Frontend Deployment (Vercel)
-
-1. Replace all API URLs (localhost) with backend live URL.
-2. Push updated frontend code to GitHub.
-3. Go to Vercel.
-4. Import GitHub repository.
-5. Add environment variable (if used):
-   VITE_API_URL=your_backend_url
-6. Click Deploy.
-7. Copy frontend live URL.
-
-### 🔹 Final Connection
-
-1. Update backend CORS with frontend URL.
-2. Redeploy backend (if changed).
-3. Test full app (Login, Cart, Orders).
-
-Important:
-
-- Do not upload `node_modules` to GitHub or Vercel.
-- Vercel installs dependencies automatically from `package.json`.
-
----
-
-## 🔌 API Endpoints
+## API Endpoints
 
 ### Products
 
-| Method | Endpoint                    | Access |
-| ------ | --------------------------- | ------ |
-| GET    | `/api/products`             | Public |
-| GET    | `/api/products/top`         | Public |
-| GET    | `/api/products/:id`         | Public |
-| POST   | `/api/products`             | Admin  |
-| PUT    | `/api/products/:id`         | Admin  |
-| DELETE | `/api/products/:id`         | Admin  |
-| POST   | `/api/products/:id/reviews` | Auth   |
+- `GET /api/products`
+- `GET /api/products/top`
+- `GET /api/products/:id`
+- `POST /api/products` (admin)
+- `PUT /api/products/:id` (admin)
+- `DELETE /api/products/:id` (admin)
+- `POST /api/products/:id/reviews` (authenticated)
 
 ### Users
 
-| Method | Endpoint              | Access |
-| ------ | --------------------- | ------ |
-| POST   | `/api/users/register` | Public |
-| POST   | `/api/users/login`    | Public |
-| GET    | `/api/users/profile`  | Auth   |
-| PUT    | `/api/users/profile`  | Auth   |
+- `POST /api/users/register`
+- `POST /api/users/login`
+- `GET /api/users/profile` (authenticated)
+- `PUT /api/users/profile` (authenticated)
+- `GET /api/users` (admin)
+- `PUT /api/users/:id/ban` (admin)
+- `DELETE /api/users/:id` (admin)
 
 ### Orders
 
-| Method | Endpoint                 | Access |
-| ------ | ------------------------ | ------ |
-| POST   | `/api/orders`            | Auth   |
-| GET    | `/api/orders/mine`       | Auth   |
-| GET    | `/api/orders/:id`        | Auth   |
-| PUT    | `/api/orders/:id/pay`    | Auth   |
-| GET    | `/api/orders`            | Admin  |
-| PUT    | `/api/orders/:id/status` | Admin  |
+- `POST /api/orders` (authenticated)
+- `GET /api/orders/mine` (authenticated)
+- `GET /api/orders/:id` (owner or admin)
+- `PUT /api/orders/:id/pay` (owner or admin)
+- `PUT /api/orders/:id/status` (admin)
+- `GET /api/orders` (admin)
+- `DELETE /api/orders/:id` (admin)
 
----
+### Utility
 
-## 🎨 Design System
+- `GET /api/categories`
+- `GET /api/reviews`
+- `GET /api/health`
 
-| Token            | Value                       |
-| ---------------- | --------------------------- |
-| `--cream`        | `#fdf6ee` — page background |
-| `--blush`        | `#f7c5b0` — soft accent     |
-| `--peach`        | `#f4a07a` — primary brand   |
-| `--sage`         | `#a8c5a0` — organic green   |
-| `--sky`          | `#b5d8f0` — light blue      |
-| `--lavender`     | `#cdb4db` — gentle purple   |
-| **Display font** | Playfair Display            |
-| **Body font**    | DM Sans                     |
+## Deployment Notes
 
----
+- Backend start command: `node backend/server.js`
+- Vercel build uses root build script and publishes from `dist`
+- Backend CORS currently allows deployed frontend domains configured in `backend/server.js`
 
-## 🛠️ Tech Stack
+## Author
 
-```
-Frontend      Backend        Database      Dev Tools
-────────────  ─────────────  ─────────────  ─────────────
-React 18      Express 4.21   MongoDB       Vite
-React Router  Mongoose 8     Atlas / Local  Nodemon
-CSS           JWT + bcryptjs CORS + dotenv  npm scripts
-```
-
----
-
-## 📱 Pages Overview
-
-1. **Home** — Hero, Categories, Bestsellers, Features, Testimonials, Newsletter
-2. **Product Detail** — Image gallery, Add to cart, Reviews, Related products
-3. **Cart** — Items, qty controls, price summary, promo codes
-4. **Checkout** — Address form → Payment → Order summary
-5. **Order Tracking** — Status timeline, Items, Invoice download
-6. **Auth** — Login / Register with validation
-7. **Admin Dashboard** — Stats cards, Product CRUD, Order management
-
----
-
-## 💖 Made with love in Hyderabad, India
+Made in Hyderabad, India.
