@@ -5,11 +5,21 @@ const cors = require("cors");
 require("dotenv").config();
 
 const app = express();
+const allowedOrigins = [
+  "https://baby-care-swart.vercel.app",
+  "https://baby-care-n-vamshidhar-reddys-projects.vercel.app",
+];
 
 // ── Middleware ──────────────────────────────────────────────────────────────
 app.use(
   cors({
-    origin: "https://baby-care-swart.vercel.app",
+    origin(origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   }),
