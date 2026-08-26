@@ -375,6 +375,7 @@ export default function App() {
   // Local UI state for cart behavior and newsletter signup.
   const [cart, setCart] = useState(() => getCart());
   const [cartOpen, setCartOpen] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
   const [activeCategory, setActiveCategory] = useState("All");
   const [addedIds, setAddedIds] = useState([]);
   const [scrolled, setScrolled] = useState(false);
@@ -481,7 +482,19 @@ export default function App() {
           <div className="logo">
             <span className="logo-dot" /> BabyCare
           </div>
-          <ul className="nav-links">
+          <button
+            className="nav-hamburger"
+            aria-label={mobileOpen ? "Close menu" : "Open menu"}
+            aria-expanded={mobileOpen}
+            onClick={() => setMobileOpen((v) => !v)}
+            type="button"
+          >
+            <span />
+            <span />
+            <span />
+          </button>
+
+          <ul className={`nav-links${mobileOpen ? " open" : ""}`}>
             {[
               { label: "Shop", href: "#products" },
               { label: "Categories", href: "#categories" },
@@ -490,7 +503,9 @@ export default function App() {
               { label: "Contact", href: "#contact" },
             ].map((link) => (
               <li key={link.label}>
-                <a href={link.href}>{link.label}</a>
+                <a href={link.href} onClick={() => setMobileOpen(false)}>
+                  {link.label}
+                </a>
               </li>
             ))}
           </ul>
@@ -499,10 +514,14 @@ export default function App() {
               className="theme-toggle"
               type="button"
               aria-label={
-                theme === "dark" ? "Switch to light theme" : "Switch to dark theme"
+                theme === "dark"
+                  ? "Switch to light theme"
+                  : "Switch to dark theme"
               }
               title={
-                theme === "dark" ? "Switch to light theme" : "Switch to dark theme"
+                theme === "dark"
+                  ? "Switch to light theme"
+                  : "Switch to dark theme"
               }
               onClick={() =>
                 setTheme((prev) => (prev === "dark" ? "light" : "dark"))
